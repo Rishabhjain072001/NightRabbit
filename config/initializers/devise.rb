@@ -9,6 +9,12 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.secret_key_base
+    jwt.dispatch_requests = ['POST /users/sign_in'] # List of requests to dispatch the JWT token
+    # jwt.revocation_requests = ['DELETE /users/sign_out'] # List of requests to revoke the JWT token
+    jwt.expiration_time = 24.hours.to_i # Set token expiration time
+  end
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -263,7 +269,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html, :turbo_stream]
+  config.navigational_formats = [:json]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
