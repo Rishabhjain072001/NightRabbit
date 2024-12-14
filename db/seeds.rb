@@ -6,4 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(email: "user@nightrabbit.com", password: "Password@1234", expires_at: Time.now + 30.days)
+User.find_or_create_by(email: "user@nightrabbit.com") do |user|
+  user.password = "Password@1234"
+  user.expires_at = Time.now + 30.days
+end
+  
