@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_user!
 
+  def frontend
+    render file: Rails.root.join('public', 'index.html')
+  end
+
   def authenticate_user!
     token = request.headers['Authorization']&.split(' ')&.last  # Extract the token from the header
 
