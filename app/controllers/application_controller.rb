@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 
   def authenticate_user!
     token = request.headers['Authorization']&.split(' ')&.last  # Extract the token from the header
-    byebug
+
     if token.nil? || decoded_token.nil?
       render json: { error: 'Not Authenticated' }, status: :unauthorized
     else
