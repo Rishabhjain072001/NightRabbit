@@ -2,7 +2,13 @@
 # exit on error
 set -o errexit
 
-cd frontend && npm install && npm run build && cp -r build/* ../public/
+# cd frontend && npm install && npm run build && cp -r build/* ../public/
+cd frontend
+npm install 
+npm run build
+cp -r build/* ../public/
+cd ..
+
 bundle install
 # bundle exec rails assets:precompile
 # bundle exec rails assets:clean
