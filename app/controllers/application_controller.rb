@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   # skip_before_action :authenticate_user!, only: [:frontend]
 
   def frontend
-    render file: Rails.root.join('public', 'index.html'), layout: false
+    render file: 'public/index.html', layout: false
   end
 
   def authenticate_user!
