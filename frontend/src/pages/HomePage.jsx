@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getAllVideos } from '../api/videoApi';
-import Navbar from '../components/Layout/Navbar';
+import VideoCard from '../components/VideoCard';
+import Header from '../components/Header';
 
-const HomePage = () => {
+import '../styles/HomePage.css';
+
+const HomePage = ({ onVideoClick }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
@@ -19,18 +22,14 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      <Navbar/>
-
-      <h1>All Videos</h1>
-      <ul>
+    <>
+      <Header />
+      <div className="home-page">
         {videos.map((video) => (
-          <li key={video.id}>
-            <a href={`/video/${video.id}`}>{video.title}</a>
-          </li>
+          <VideoCard key={video.id} video={video} onClick={onVideoClick} />
         ))}
-      </ul>
-    </div>
+      </div>
+    </>
   );
 };
 
