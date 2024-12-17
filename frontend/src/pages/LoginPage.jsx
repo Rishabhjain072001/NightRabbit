@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import { loginUser } from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import '../styles/Login.css';
 
 
 const LoginPage = () => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await loginUser(email, password);
-      navigate('/'); // Redirect to home after successful login
-    } catch (err) {
-      setError('Invalid credentials');
+      await login({ email, password });
+      navigate('/'); 
+    } catch {
+      setError('Invalid email or password');
     }
   };
 
   return (
     <div className="login-container">
       {error && <p>{error}</p>}
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleLogin}>
         <h2 className="login-title">Login</h2>
         <div className="form-group">
           <label htmlFor="email">Email</label>

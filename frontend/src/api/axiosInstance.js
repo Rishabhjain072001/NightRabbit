@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 
 // Adding the authentication token if it's available in localStorage
 const addAuthToken = (config) => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem('token');
 
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`;
