@@ -5,7 +5,7 @@ class JwtService
 
   # Encode the user information into a JWT token
   def self.encode(payload)
-    # Expiration time can be added to the token payload, e.g., 24 hours
+    payload[:scp] = 'user'
     payload[:exp] = 24.hours.from_now.to_i
     JWT.encode(payload, HMAC_SECRET)
   end
@@ -13,10 +13,9 @@ class JwtService
   # Decode the JWT token and retrieve the payload
   def self.decode(token)
     begin
-      # Decode the token and return the payload
       decoded = JWT.decode(token, HMAC_SECRET, true, { algorithm: 'HS256' })
-      decoded.first  # The first element contains the payload
-      rescue JWT::DecodeError => e
+      decoded.first
+    rescue JWT::DecodeError => e
       nil  # Return nil if decoding fails
     end
   end
