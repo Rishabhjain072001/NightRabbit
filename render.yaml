@@ -1,7 +1,7 @@
 databases:
   - name: nightrabbit
-    databaseName: nightrabbit
-    user: nightrabbit_user
+    databaseName: nightrabbit_obxc
+    user: nightrabbit_obxc_user
     plan: free
 
 services:
