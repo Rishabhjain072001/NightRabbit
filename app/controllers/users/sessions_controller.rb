@@ -29,4 +29,12 @@ class Users::SessionsController < Devise::SessionsController
 
     render json: { message: 'Logged out successfully' }, status: :ok
   end
+
+  def validate_token
+    if current_user
+      render json: { user: current_user }, status: :ok
+    else
+      render json: { error: 'Invalid or expired token' }, status: :unauthorized
+    end
+  end
 end

@@ -9,9 +9,9 @@ function App() {
     <Router>
       <Routes>
         <Route element={<ProtectedRoute />}>
-          <Route path="/" exact element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
         </Route>
-        <Route path="/login" exact element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Router>
   );
