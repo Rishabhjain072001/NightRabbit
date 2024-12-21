@@ -4,11 +4,10 @@ import { AuthContext } from '../context/AuthContext';
 
 import '../styles/Header.css';
 
-
-const Header = ({ query, onSearch }) => {
-  const { logout } = useContext(AuthContext);
+const Header = ({query, setQuery}) => {
   const navigate = useNavigate();
-  const [localQuery, setLocalQuery] = useState(query); 
+  const { logout } = useContext(AuthContext);
+  const [localSearchquery, setlocalSearchquery] = useState(query); 
   
   const handleLogout = () => {
     logout();
@@ -17,7 +16,8 @@ const Header = ({ query, onSearch }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    onSearch(localQuery);
+    setQuery(localSearchquery)
+    navigate(`/?query=${localSearchquery}`);
   };
 
   return (
@@ -27,8 +27,8 @@ const Header = ({ query, onSearch }) => {
         <form className="search-container" onSubmit={handleSearch}>
           <input
             type="text"
-            value={localQuery}
-            onChange={(e) => setLocalQuery(e.target.value)}
+            value={localSearchquery}
+            onChange={(e) => setlocalSearchquery(e.target.value)}
             placeholder="Search videos..."
           />
           <button type="submit">Search</button>

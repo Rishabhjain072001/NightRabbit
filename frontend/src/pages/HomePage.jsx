@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { getVideos } from '../api/videoApi';
 import VideoCard from '../components/VideoCard';
-import Header from '../components/Header';
 import _ from "lodash";
 
 import '../styles/HomePage.css';
 
 const HomePage = () => {
+  const { query } = useOutletContext(); 
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [query, setQuery] = useState(''); 
 
   // Fetch videos based on the current page and search query
-  const fetchVideos = useCallback(async (pageToFetch, searchQuery = "") => {
+  const fetchVideos = useCallback(async (pageToFetch, searchQuery) => {
     try {
       setLoading(true);
       const data = await getVideos(pageToFetch, searchQuery);
@@ -32,10 +32,16 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
+    setPage(1);
+    setHasMore(true);
+    fetchVideos(page, query);
+  }, [query]);
+
+  useEffect(() => {
     if (hasMore) {
       fetchVideos(page, query);
     }
-  }, [page, query, hasMore]);
+  }, [page, hasMore]);
 
   // Throttled scroll handler to detect when the user reaches the bottom
   const handleScroll = useRef(
@@ -50,12 +56,6 @@ const HomePage = () => {
     }, 300)
   ).current;
 
-  const handleSearchSubmit = useCallback((searchQuery) => {
-    setQuery(searchQuery);
-    setPage(1);
-    setHasMore(true);
-  }, []);
-
   // Add scroll event listener
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -64,7 +64,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Header query={query} onSearch={handleSearchSubmit } />
       <div className="home-page">
         {videos.map((video) => (
           <VideoCard key={video.id} video={video} />
