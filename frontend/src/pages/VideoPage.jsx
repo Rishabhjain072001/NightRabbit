@@ -43,7 +43,7 @@ const VideoPage = () => {
   useEffect(() => {
     fetchVideoDetails();
     fetchSuggestions(1);
-  }, []);
+  }, [videoId]);
 
   useEffect(() => {
     if (page > 1 && hasMore) fetchSuggestions(page);
