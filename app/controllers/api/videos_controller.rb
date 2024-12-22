@@ -14,6 +14,7 @@ class Api::VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
-    render json: @video, serializer: VideoSerializer
+    video_data = VideoDataService.new(@video).fetch_video_data
+    render json: @video, serializer: VideoSerializer, video_data: video_data
   end
 end

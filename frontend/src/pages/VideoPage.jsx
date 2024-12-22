@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import VideoPlayer from '../components/VideoPlayer';
 import VideoGrid from '../components/VideoGrid';
 import _ from "lodash";
-
 import { getVideoById, getVideos } from '../api/videoApi';
+
+import '../styles/VideoPage.css';
 
 const VideoPage = () => {
   const { videoId } = useParams(); 
@@ -12,11 +13,14 @@ const VideoPage = () => {
   const [suggestedVideos, setSuggestedVideos]= useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   const fetchVideoDetails = async () => {
+    setVideoLoading(true)
     const data = await getVideoById(videoId);
     setVideo(data);
+    setVideoLoading(false)
   };
 
   const fetchSuggestions = useCallback(async (pageToFetch) => {
@@ -64,14 +68,19 @@ const VideoPage = () => {
     return () => window.removeEventListener("scroll", handleScroll); // Cleanup
   }, [handleScroll]);
 
+  if (videoLoading) {
+    return <div>Video Loading...</div>;
+  }
+
   return (
      <>
       <div className="video-page">
         <div className="video-player-container">
           <VideoPlayer video={video} />
+          <h1 className="video-play-title">{video?.title}</h1>
         </div>
 
-        <h2>Suggestions</h2>
+        <h2>More Videos</h2>
         <VideoGrid videos={suggestedVideos} />
         {loading && <p>Loading more...</p>}
       </div>

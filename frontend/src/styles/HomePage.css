@@ -1,9 +1,5 @@
 /* HomePage.css */
 
-body, html {
-    margin: 0;
-    padding: 0;
-    background-color: #121212; /* Dark theme */
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-  }
+.home-page {
+  padding: 25px;
+}

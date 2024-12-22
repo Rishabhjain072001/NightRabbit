@@ -1,20 +1,16 @@
 .video-page {
-    padding: 20px;
+    padding: 25px;
     color: #fff;
-  }
-  
-  .video-player-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    width: 90%;
-  }
-  
-  .video-player {
-    width: 100%;
-    max-width: 1200px;
-    height: auto;
-    border-radius: 8px;
-  }
-  
+}
+
+.video-player-container {
+  flex: 2;  /* Take up 2/3 of the page width */
+  max-width: 800px;  /* Limit width to 800px like YouTube */
+}
+
+.video-play-title {
+  margin-top: 15px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
