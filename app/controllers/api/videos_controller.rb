@@ -2,7 +2,7 @@ class Api::VideosController < ApplicationController
   def index
     if params[:query].present?
       @videos = Video.joins(:categories)
-                     .where("to_tsvector('english', videos.title) @@ plainto_tsquery(?) OR to_tsvector('english', categories.name) @@ plainto_tsquery(?)", params[:query], params[:query]) 
+                     .where("videos.title ILIKE :query OR categories.name ILIKE :query", query: "%#{params[:query]}%")
                      .page(params[:page])
                      .per(20)
     else
