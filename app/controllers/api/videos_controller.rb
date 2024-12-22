@@ -12,14 +12,8 @@ class Api::VideosController < ApplicationController
     render json: @videos, each_serializer: VideoSerializer
   end
 
-  # def show
-  #   @video = Video.find(params[:id])
-  #   render json: @videos, serializer: VideoSerializer
-  # end
-
   def show
     @video = Video.find(params[:id])
-    @suggestions = Video.where.not(id: @video.id).limit(5) # Example of fetching 5 related videos
-    render json: { video: @video, suggestions: @suggestions }, serializer: VideoSerializer
+    render json: @video, serializer: VideoSerializer
   end
 end

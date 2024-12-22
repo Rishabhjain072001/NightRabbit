@@ -15,7 +15,7 @@ export const getVideos = async (page, query) => {
 // Fetch a specific video by ID
 export const getVideoById = async (id) => {
   try {
-    const response = await axiosInstance.get(`/api/video/${id}`);
+    const response = await axiosInstance.get(`/api/videos/${id}`);
     return response.data;
   } catch (error) {
     throw error;

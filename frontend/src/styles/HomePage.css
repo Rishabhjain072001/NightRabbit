@@ -7,11 +7,3 @@ body, html {
     color: #ffffff;
     font-family: Arial, sans-serif;
   }
-  
-  .home-page {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Spacing between cards */
-    padding: 20px;
-  }
- 
