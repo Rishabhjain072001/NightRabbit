@@ -5,6 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  has_many :user_watch_histories, dependent: :destroy
+  has_many :watched_videos, through: :user_watch_histories, source: :video
+
   before_create :set_jti
 
   private

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import VideoPlayer from '../components/VideoPlayer';
 import VideoGrid from '../components/VideoGrid';
 import _ from "lodash";
-import { getVideoById, getVideos } from '../api/videoApi';
+import { getSuggestions, getVideoById } from '../api/videoApi';
 
 import '../styles/VideoPage.css';
 
@@ -26,7 +26,7 @@ const VideoPage = () => {
   const fetchSuggestions = useCallback(async (pageToFetch) => {
     try {
       setLoading(true);
-      const data = await getVideos(pageToFetch, '');
+      const data = await getSuggestions(videoId, pageToFetch);
       if (pageToFetch === 1) {
         setSuggestedVideos(data); // Replace videos on new search
       } else {

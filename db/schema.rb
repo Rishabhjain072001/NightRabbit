@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_12_17_174112) do
+ActiveRecord::Schema.define(version: 2024_12_24_153900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 2024_12_17_174112) do
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_watch_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "video_id", null: false
+    t.datetime "last_watched_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "video_id"], name: "index_user_watch_histories_on_user_id_and_video_id", unique: true
+    t.index ["user_id"], name: "index_user_watch_histories_on_user_id"
+    t.index ["video_id"], name: "index_user_watch_histories_on_video_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,7 +77,7 @@ ActiveRecord::Schema.define(version: 2024_12_17_174112) do
     t.text "image_url"
     t.text "video_url"
     t.integer "website_id"
-    t.json "metadata"
+    t.jsonb "metadata"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["title"], name: "index_videos_on_title"
@@ -78,6 +89,8 @@ ActiveRecord::Schema.define(version: 2024_12_17_174112) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "user_watch_histories", "users"
+  add_foreign_key "user_watch_histories", "videos"
   add_foreign_key "video_categories", "categories"
   add_foreign_key "video_categories", "videos"
 end
