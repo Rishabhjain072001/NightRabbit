@@ -41,18 +41,14 @@ class Api::VideosController < ApplicationController
     Video.joins(:categories)
         .where(categories: { id: category_ids })
         .where("videos.id > ?", video_id) 
-        .select("videos.*, COALESCE(metadata->>'views', '0')::int AS views_order")
-        .order("views_order DESC")
         .page(params[:page])
-        .per(10) 
+        .per(20) 
   end
 
   def fallback_videos(video_id)
     Video.where.not(id: video_id)
-        .select("videos.*, COALESCE(metadata->>'views', '0')::int AS views_order")
-        .order("views_order DESC")
         .page(params[:page])
-        .per(10)
+        .per(20)
   end
 
   
