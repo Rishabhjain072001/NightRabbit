@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FaSearch } from 'react-icons/fa'; // Import the search icon
 
@@ -8,6 +8,7 @@ import { getSearchSuggestions } from '../api/searchSuggestionApi';
 
 const Header = ({ query, setQuery }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useContext(AuthContext);
   const [localSearchquery, setLocalSearchquery] = useState(query); 
   const [suggestions, setSuggestions] = useState([]);
@@ -52,6 +53,13 @@ const Header = ({ query, setQuery }) => {
     fetchSuggestions()
     }
   }, [localSearchquery]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const queryParam = params.get('query') || '';
+    setLocalSearchquery(queryParam);
+    setQuery(queryParam);
+  }, [location.search]);
 
   return (
     <header>

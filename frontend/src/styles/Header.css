@@ -15,11 +15,12 @@ header h1 {
 
 .search-container {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
   position: relative;
   max-width: 600px;
+  margin: 0 10px;
 }
 
 .search-container form {
@@ -29,7 +30,7 @@ header h1 {
 }
 
 .search-container input[type="text"] {
-  padding: 10px 20px;
+  padding: 10px 16px;
   border: 1px solid #444;
   border-radius: 24px 0 0 24px;
   background-color: #333;
@@ -40,7 +41,7 @@ header h1 {
   transition: border-color 0.3s;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Truncate long text with ... */
+  text-overflow: ellipsis;
 }
 
 .search-container input[type="text"]:focus {
@@ -91,16 +92,15 @@ header h1 {
 
 .suggestion-item span {
   display: inline-block;
-  max-width: calc(100% - 10px); /* Ensure padding space is respected */
+  max-width: calc(100% - 10px);
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Truncate text with ... */
+  text-overflow: ellipsis;
 }
 
 .suggestion-item span:first-child {
-  font-weight: bold; /* Highlight the main suggestion */
+  font-weight: bold;
 }
-
 
 .suggestion-item:hover {
   background-color: #444;
@@ -114,9 +114,53 @@ header h1 {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  margin-left: 10px;
 }
 
 .logout-button:hover {
   background-color: #f44336;
   color: #ffffff;
+}
+
+/* MOBILE RESPONSIVE STYLES */
+@media screen and (max-width: 768px) {
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 0.9rem; /* Adjust font size */
+    padding: 8px 12px; /* Adjust padding */
+  }
+
+  .search-container button {
+    font-size: 1rem; /* Adjust font size */
+    padding: 8px 12px; /* Adjust padding */
+  }
+
+  .logout-button {
+    font-size: 0.9rem; /* Smaller font size */
+    padding: 6px 12px; /* Adjust padding */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header h1 {
+    font-size: 1rem; /* Further reduce font size */
+  }
+
+  .search-container input[type="text"] {
+    font-size: 0.8rem; /* Smaller font size */
+    padding: 6px 10px; /* Adjust padding */
+  }
+
+  .search-container button {
+    font-size: 0.9rem; /* Adjust button font size */
+    padding: 6px 10px; /* Adjust padding */
+  }
+
+  .logout-button {
+    font-size: 0.8rem; /* Smaller font size */
+    padding: 5px 10px; /* Adjust padding */
+  }
 }
