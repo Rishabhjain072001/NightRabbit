@@ -27,6 +27,14 @@ class Api::VideosController < ApplicationController
     render json: @videos, each_serializer: VideoSerializer
   end
 
+  def search_suggestions
+    @videos = Video.joins(:categories)
+                     .where("videos.title ILIKE :query OR categories.name ILIKE :query", query: "%#{params[:query][:localSearchquery]}%")
+                     .select("videos.id, videos.title, categories.name as category_name")
+                     .limit(10)
+    render json: @videos.as_json
+  end
+
   private
 
   def fetch_suggested_videos(category_ids, video_id)

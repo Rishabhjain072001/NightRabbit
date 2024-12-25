@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :videos, only: [:index, :show] do
       get :suggestions, on: :member
+      get :search_suggestions, on: :collection
     end
   end
 

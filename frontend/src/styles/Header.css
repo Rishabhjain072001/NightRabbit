@@ -1,63 +1,122 @@
-/* Header.css */
-
 header {
-    background-color: #121212; /* Dark header background */
-    color: #ffffff; /* White text for contrast */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
-  
-  header h1 {
-    font-size: 1.5rem;
-    margin: 0;
-  }
-  
-  .search-container {
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
-    padding-left: 30px;
-    padding-right: 30px;
-    min-width: 100px;
-  }
-  
-  .search-container input[type="text"] {
-    padding: 8px;
-    border: 1px solid #333;
-    border-radius: 4px 0 0 4px;
-    background-color: #333;
-    color: #ffffff;
-    outline: none;
-  }
-  
-  .search-container button {
-    padding: 8px 12px;
-    border: none;
-    background-color: #f44336; /* Red accent */
-    color: #ffffff;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .search-container button:hover {
-    background-color: #d32f2f; /* Darker red on hover */
-  }
-  
-  /* Logout button styling */
-.logout-button {
-  padding: 8px 12px;
-  background-color: #4caf50; /* Green color */
+  background-color: #121212;
   color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  position: relative;
+  max-width: 600px;
+}
+
+.search-container form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-container input[type="text"] {
+  padding: 10px 20px;
+  border: 1px solid #444;
+  border-radius: 24px 0 0 24px;
+  background-color: #333;
+  color: #ffffff;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncate long text with ... */
+}
+
+.search-container input[type="text"]:focus {
+  border-color: #f44336;
+}
+
+.search-container button {
+  padding: 10px 16px;
   border: none;
-  border-radius: 4px;
+  background-color: #f44336;
+  color: #ffffff;
+  border-radius: 0 24px 24px 0;
   cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.3s;
 }
 
+.search-container button:hover {
+  background-color: #d32f2f;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  width: 100%;
+}
+
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.suggestion-item span {
+  display: inline-block;
+  max-width: calc(100% - 10px); /* Ensure padding space is respected */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncate text with ... */
+}
+
+.suggestion-item span:first-child {
+  font-weight: bold; /* Highlight the main suggestion */
+}
+
+
+.suggestion-item:hover {
+  background-color: #444;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
 .logout-button:hover {
-  background-color: #388e3c; /* Darker green on hover */
+  background-color: #f44336;
+  color: #ffffff;
 }
