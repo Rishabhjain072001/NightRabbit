@@ -38,7 +38,7 @@ const VideoPage = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [videoId]);
 
   useEffect(() => {
     fetchVideoDetails();

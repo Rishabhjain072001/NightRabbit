@@ -22,12 +22,7 @@ class Api::VideosController < ApplicationController
   def suggestions
     @video = Video.find(params[:id])
     category_ids = @video.categories.ids
-  
-    @videos = fetch_suggested_videos(category_ids, @video.id)
-                 .page(params[:page])
-                 .per(10)
-  
-    @videos = fallback_videos(@video.id) if @videos.empty?
+    @videos = fetch_suggested_videos(category_ids, @video.id).presence || fallback_videos(@video.id)
   
     render json: @videos, each_serializer: VideoSerializer
   end
@@ -37,15 +32,15 @@ class Api::VideosController < ApplicationController
   def fetch_suggested_videos(category_ids, video_id)
     Video.joins(:categories)
         .where(categories: { id: category_ids })
-        .where.not(id: video_id)
-        .distinct
+        .where("videos.id > ?", video_id) 
         .select("videos.*, COALESCE(metadata->>'views', '0')::int AS views_order")
         .order("views_order DESC")
+        .page(params[:page])
+        .per(10) 
   end
 
   def fallback_videos(video_id)
     Video.where.not(id: video_id)
-        .distinct
         .select("videos.*, COALESCE(metadata->>'views', '0')::int AS views_order")
         .order("views_order DESC")
         .page(params[:page])
