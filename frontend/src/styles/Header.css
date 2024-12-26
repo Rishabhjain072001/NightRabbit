@@ -13,6 +13,11 @@ header h1 {
   margin: 0;
 }
 
+header h1 .header-link {
+  color: white;
+  text-decoration: none; /* Removes the underline */
+}
+
 .search-container {
   display: flex;
   flex-grow: 1;
@@ -121,6 +126,27 @@ header h1 {
   background-color: #f44336;
   color: #ffffff;
 }
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.categories-button {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.categories-button:hover {
+  background-color: #f44336; /* Green color on hover */
+  color: #ffffff;
+}
+
 
 /* MOBILE RESPONSIVE STYLES */
 @media screen and (max-width: 768px) {
