@@ -42,6 +42,7 @@ const VideoPage = () => {
 
   useEffect(() => {
     fetchVideoDetails();
+    setSuggestedVideos([])
     fetchSuggestions(1);
   }, [videoId]);
 

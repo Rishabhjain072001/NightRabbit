@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FaSearch } from 'react-icons/fa'; // Import the search icon
@@ -13,6 +13,8 @@ const Header = ({ query, setQuery }) => {
   const [localSearchquery, setLocalSearchquery] = useState(query); 
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const searchContainerRef = useRef(null);  // Ref to track the search container
+  const [isInputFocused, setIsInputFocused] = useState(false); // Track if the input is focused
 
   const handleLogout = () => {
     logout();
@@ -32,7 +34,7 @@ const Header = ({ query, setQuery }) => {
 
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion.title);
-    setLocalSearchquery(suggestion.title)
+    setLocalSearchquery(suggestion.title);
     setSuggestions([]);
     navigate(`/?query=${suggestion.title}`);
   };
@@ -53,8 +55,8 @@ const Header = ({ query, setQuery }) => {
   }, [localSearchquery]);
   
   useEffect(() => {
-    if(query != localSearchquery){
-    fetchSuggestions()
+    if(query !== localSearchquery){
+      fetchSuggestions();
     }
   }, [localSearchquery]);
 
@@ -65,20 +67,41 @@ const Header = ({ query, setQuery }) => {
     setQuery(queryParam);
   }, [location.search]);
 
+  // Handle blur event to clear suggestions when focus is lost
+  const handleBlur = (e) => {
+    setTimeout(() => {
+      if (!searchContainerRef.current.contains(document.activeElement)) {
+        setSuggestions([]); // Clear suggestions if focus is outside
+      }
+    }, 100);
+  };
+
+  // Handle focus event to set the input as focused
+  const handleFocus = () => {
+    setIsInputFocused(true);
+  };
+
   return (
     <header>
       <h1><Link to="/" className="header-link">NightRabbit</Link></h1>
-      <div className="search-container">
+      <div
+        className="search-container"
+        ref={searchContainerRef}
+        onBlur={handleBlur} // Add the blur handler here
+        onFocus={handleFocus} // Set focus state when the input is focused
+      >
         <form onSubmit={handleSearch}>
           <input
             type="text"
             value={localSearchquery}
             onChange={(e) => setLocalSearchquery(e.target.value)}
             placeholder="Search videos..."
+            onBlur={handleBlur} // Handle the blur event
+            onFocus={handleFocus} // Handle the focus event
           />
           <button type="submit"><FaSearch /></button>
         </form>
-        {localSearchquery && (
+        {localSearchquery && isInputFocused && (
           <div className="suggestions-list">
             {loading ? (
               <div className='suggestion-item'>
@@ -90,6 +113,7 @@ const Header = ({ query, setQuery }) => {
                   key={suggestion.id}
                   className="suggestion-item"
                   onClick={() => handleSuggestionClick(suggestion)}
+                  onMouseDown={(e) => e.preventDefault()} // Prevent blur when clicking suggestion
                 >
                   <span>{suggestion.title}</span>
                   <span>{suggestion.category_name}</span>

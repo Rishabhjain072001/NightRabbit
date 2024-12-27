@@ -3,3 +3,9 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
   }
+
+.no-videos {
+  grid-column: span 4;
+  color: #888;
+  text-align: center;
+}

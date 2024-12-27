@@ -33,6 +33,7 @@ const CategoryVideosPage = () => {
 
   useEffect(() => {
     setPage(1);
+    setVideos([])
     setHasMore(true);
     fetchVideos(1, categoryId);
   }, [categoryId]);
@@ -65,8 +66,7 @@ const CategoryVideosPage = () => {
   return (
     <>
       <div className="category-page">
-        <VideoGrid videos={videos} />
-        {loading && <div>Loading...</div>}
+        <VideoGrid videos={videos} loading={loading} />
       </div>
     </>
   );

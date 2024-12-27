@@ -33,6 +33,7 @@ const HomePage = () => {
 
   useEffect(() => {
     setPage(1);
+    setVideos([])
     setHasMore(true);
     fetchVideos(1, query);
   }, [query]);
@@ -65,8 +66,7 @@ const HomePage = () => {
   return (
     <>
       <div className="home-page">
-        <VideoGrid videos={videos} />
-        {loading && <div>Loading...</div>}
+        <VideoGrid videos={videos} loading={loading} />
       </div>
     </>
   );
