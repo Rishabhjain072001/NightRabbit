@@ -16,16 +16,16 @@ const LoginPage = () => {
     try {
       await login({ email, password });
       navigate('/'); 
-    } catch {
-      setError('Invalid email or password');
+    } catch (err) {
+      setError(err?.response?.data?.error || "Something went wrong!");
     }
   };
 
   return (
     <div className="login-container">
-      {error && <p>{error}</p>}
       <form className="login-form" onSubmit={handleLogin}>
         <h2 className="login-title">Login</h2>
+        {error && <p className='login-error'>{error}</p>}
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />

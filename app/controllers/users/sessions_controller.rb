@@ -13,7 +13,7 @@ class Users::SessionsController < Devise::SessionsController
         token = JwtService.encode({ user_id: user.id, jti: user.jti })  # Generate JWT token
         render json: {  token: token, user: user }, status: :ok
       else
-        render json: { error: "Account has expired. Please renew your subscription." }, status: :unauthorized
+        render json: { error: "Account has expired. Please contact admin!" }, status: :unauthorized
       end
     else
       render json: { error: "Invalid email or password." }, status: :unauthorized

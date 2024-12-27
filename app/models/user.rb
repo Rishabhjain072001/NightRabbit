@@ -10,6 +10,10 @@ class User < ApplicationRecord
 
   before_create :set_jti
 
+  def expired?
+    self.expires_at < Time.current
+  end
+
   private
 
   def set_jti

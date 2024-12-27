@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000'; // API URL for development or production
 
@@ -30,13 +29,7 @@ axiosInstance.interceptors.request.use(
 // Response interceptor for handling errors globally
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    const navigate = useNavigate();
-    if (error.response && error.response.status === 401) {
-      navigate('/login');
-    }
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;
