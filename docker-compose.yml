@@ -12,6 +12,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - VIDEO_SCRAPING_ENDPOINT=${VIDEO_SCRAPING_ENDPOINT}
     depends_on:
       - frontend
 
