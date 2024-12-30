@@ -2,18 +2,6 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!
 
   def authenticate_user!
-    token = request.headers['Authorization']&.split(' ')&.last  # Extract the token from the header
-
-    if token.nil? || decoded_token.nil?
-      render json: { error: 'Not Authenticated' }, status: :unauthorized
-    else
-      @current_user = User.find_by(id: decoded_token['user_id'], jti: decoded_token[:jti])
-      render json: {error: "Your login credentials are expires please contact admin for new login credentials"} if @current_user.expired?
-      render json: { error: 'Invalid token' }, status: :unauthorized if @current_user.nil?
-    end
-  end
-
-  def authenticate_user!
     token = request.headers['Authorization']&.split(' ')&.last
 
     if token.blank? || decoded_token.blank?

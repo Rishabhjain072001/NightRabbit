@@ -1,7 +1,7 @@
 # app/services/jwt_service.rb
 class JwtService
     # The secret key for signing the JWT token, typically stored in credentials or environment variables
-  HMAC_SECRET = Rails.application.credentials.secret_key_base
+  HMAC_SECRET = ENV['SECRET_KEY_BASE']
 
   # Encode the user information into a JWT token
   def self.encode(payload)
@@ -20,4 +20,3 @@ class JwtService
     end
   end
 end
-  
