@@ -13,6 +13,7 @@ class Video < ApplicationRecord
       title: title,
       category_ids: categories.pluck(:id),
       category_names: categories.pluck(:name),
+      video_id: id,
     }
   end
 end
