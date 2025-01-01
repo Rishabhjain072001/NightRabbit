@@ -4,8 +4,9 @@ class Api::VideosController < ApplicationController
       videos = Video.search(params[:query], 
         fields: ["title^10", "category_names^5"], 
         match: :word_start, 
-        limit: 10, 
-        misspellings: { below: 5 }
+        misspellings: { below: 5 },
+        page: params[:page],
+        per_page: 20
       )
 
       videos = videos.results if videos.respond_to?(:results)
@@ -49,13 +50,16 @@ class Api::VideosController < ApplicationController
 
   def fetch_suggested_videos(category_ids, video_id)
    Video.search('*', 
-               where: { category_ids: category_ids, id: { not: video_id } },
-               page: params[:page], per_page: 20)
+               where: { category_ids: category_ids },
+               where: { video_id: { gt: video_id } },
+               page: params[:page], 
+               per_page: 20,
+              )
   end
 
   def fallback_videos(video_id)
     Video.search('*',
-                where: { id: { not: video_id } }, 
+                where: { video_id: { gt: video_id } },
                 page: params[:page], per_page: 20)
   end
 
