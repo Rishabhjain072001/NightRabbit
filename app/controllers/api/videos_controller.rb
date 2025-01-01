@@ -1,8 +1,12 @@
 class Api::VideosController < ApplicationController
   def index
     if params[:query].present?
-      videos = Video.search(params[:query], fields: [:title, :category_names], 
-                            page: params[:page], per_page: 20)
+      videos = Video.search(params[:query], 
+        fields: ["title^10", "category_names^5"], 
+        match: :word_start, 
+        limit: 10, 
+        misspellings: { below: 5 }
+      )
 
       videos = videos.results if videos.respond_to?(:results)
     else
@@ -13,13 +17,7 @@ class Api::VideosController < ApplicationController
   end
 
   def show
-    video = Video.search('*', fields: [:id], where: { id: params[:id] }).first
-
-    if video.nil?
-      render json: { error: 'Video not found' }, status: :not_found
-      return
-    end
-  
+    video = Video.find(params[:id])
     track_watch_history(current_user, video)
     video_data = VideoDataService.new(video).fetch_video_data
     render json: video, serializer: VideoSerializer, video_data: video_data
@@ -34,27 +32,31 @@ class Api::VideosController < ApplicationController
   end
 
   def search_suggestions
-    videos = Video.joins(:categories)
-                     .where("videos.title ILIKE :query OR categories.name ILIKE :query", query: "%#{params[:query][:localSearchquery]}%")
-                     .select("videos.id, videos.title, categories.name as category_name")
-                     .limit(10)
-    render json: videos.as_json
+    suggestions = Video.search(params[:query][:localSearchquery], 
+      fields: ["title^10", "category_names^5"], 
+      match: :word_start, 
+      limit: 10, 
+      misspellings: { below: 5 }
+    )
+
+    render json: suggestions.map { |video| { 
+      title: video.title, 
+      category_name: video.categories.first&.name 
+    } }
   end
 
   private
 
   def fetch_suggested_videos(category_ids, video_id)
-    Video.joins(:categories)
-        .where(categories: { id: category_ids })
-        .where("videos.id > ?", video_id) 
-        .page(params[:page])
-        .per(20) 
+   Video.search('*', 
+               where: { category_ids: category_ids, id: { not: video_id } },
+               page: params[:page], per_page: 20)
   end
 
   def fallback_videos(video_id)
-    Video.where.not(id: video_id)
-        .page(params[:page])
-        .per(20)
+    Video.search('*',
+                where: { id: { not: video_id } }, 
+                page: params[:page], per_page: 20)
   end
 
   def track_watch_history(user, video)
