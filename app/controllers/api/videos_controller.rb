@@ -1,10 +1,10 @@
 class Api::VideosController < ApplicationController
   def index
     if params[:query].present?
-      videos = Video.joins(:categories)
-                     .where("videos.title ILIKE :query OR categories.name ILIKE :query", query: "%#{params[:query]}%")
-                     .page(params[:page])
-                     .per(20)
+      videos = Video.search(params[:query], fields: [:title, :category_names], 
+                            page: params[:page], per_page: 20)
+
+      videos = videos.results if videos.respond_to?(:results)
     else
       videos = Video.page(params[:page]).per(20)
     end
@@ -13,7 +13,13 @@ class Api::VideosController < ApplicationController
   end
 
   def show
-    video = Video.find(params[:id])
+    video = Video.search('*', fields: [:id], where: { id: params[:id] }).first
+
+    if video.nil?
+      render json: { error: 'Video not found' }, status: :not_found
+      return
+    end
+  
     track_watch_history(current_user, video)
     video_data = VideoDataService.new(video).fetch_video_data
     render json: video, serializer: VideoSerializer, video_data: video_data
