@@ -1,5 +1,5 @@
 class Video < ApplicationRecord
-  searchkick
+  searchkick  word_start: [:title, :category_names]
 
   has_many :video_categories
   has_many :categories, through: :video_categories
@@ -11,7 +11,8 @@ class Video < ApplicationRecord
   def search_data
     {
       title: title,
-      category_names: categories.map(&:name)
+      category_ids: categories.pluck(:id),
+      category_names: categories.pluck(:name),
     }
   end
 end
