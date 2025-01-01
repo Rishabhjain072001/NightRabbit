@@ -31,7 +31,6 @@ gem 'rack-cors'
 gem 'kaminari'
 
 gem 'httparty'
-
 gem 'searchkick'
 
 gem 'faraday'
