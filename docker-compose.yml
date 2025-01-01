@@ -13,8 +13,10 @@ services:
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - VIDEO_SCRAPING_ENDPOINT=${VIDEO_SCRAPING_ENDPOINT}
+      - ELASTICSEARCH_URL=http://elasticsearch:9200 # Add this line to connect to the elasticsearch container
     depends_on:
       - frontend
+      - elasticsearch # Add Elasticsearch as a dependency so the backend waits for it to start
 
   frontend:
     build:
@@ -26,3 +28,16 @@ services:
       - ./frontend:/frontend
     environment:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0 # Use the official Elasticsearch Docker image
+    environment:
+      - discovery.type=single-node # Set the discovery type to single-node for local use
+    ports:
+      - "9200:9200" # Expose Elasticsearch on port 9200
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
