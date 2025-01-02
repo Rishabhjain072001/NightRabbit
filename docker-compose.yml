@@ -13,10 +13,12 @@ services:
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - VIDEO_SCRAPING_ENDPOINT=${VIDEO_SCRAPING_ENDPOINT}
-      - ELASTICSEARCH_URL=http://elasticsearch:9200 # Add this line to connect to the elasticsearch container
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - REDIS_URL=redis://redis:6379/0
     depends_on:
       - frontend
-      - elasticsearch # Add Elasticsearch as a dependency so the backend waits for it to start
+      - elasticsearch
+      - redis
 
   frontend:
     build:
@@ -35,6 +37,13 @@ services:
       - discovery.type=single-node # Set the discovery type to single-node for local use
     ports:
       - "9200:9200" # Expose Elasticsearch on port 9200
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest # Use official Redis Docker image
+    ports:
+      - "6379:6379" # Expose Redis on port 6379
     networks:
       - app-network
 
