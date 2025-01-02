@@ -26,8 +26,5 @@ COPY supervisord.conf /etc/supervisor/conf.d/
 # Expose port 3000
 EXPOSE 3001
 
-# Start the Rails server, ensuring the server.pid file is removed
-CMD ["bash", "-c", "rm -f /app/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p 3001"]
-
 # Start supervisor to manage both Rails server and Sidekiq
 CMD ["/usr/bin/supervisord"]
