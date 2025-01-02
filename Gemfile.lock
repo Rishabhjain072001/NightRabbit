@@ -102,13 +102,13 @@ GEM
       concurrent-ruby (~> 1.0)
       logger
       zeitwerk (~> 2.6)
-    elastic-transport (8.3.5)
-      faraday (< 3)
+    elasticsearch (7.10.1)
+      elasticsearch-api (= 7.10.1)
+      elasticsearch-transport (= 7.10.1)
+    elasticsearch-api (7.10.1)
       multi_json
-    elasticsearch (8.17.0)
-      elastic-transport (~> 8.3)
-      elasticsearch-api (= 8.17.0)
-    elasticsearch-api (8.17.0)
+    elasticsearch-transport (7.10.1)
+      faraday (~> 1)
       multi_json
     erubi (1.13.0)
     factory_bot (6.5.0)
@@ -118,12 +118,9 @@ GEM
       railties (>= 5.0.0)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.12.2)
-      faraday-net_http (>= 2.0, < 3.5)
-      json
-      logger
-    faraday-net_http (3.4.0)
-      net-http (>= 0.5.0)
+    faraday (1.2.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -133,7 +130,6 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    json (2.9.1)
     jsonapi-renderer (0.2.2)
     jwt (2.9.3)
       base64
@@ -166,8 +162,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
-    net-http (0.6.0)
-      uri
+    multipart-post (2.4.1)
     net-imap (0.5.1)
       date
       net-protocol
@@ -239,6 +234,7 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.13.2)
+    ruby2_keywords (0.0.5)
     searchkick (5.4.0)
       activemodel (>= 6.1)
       hashie
@@ -255,7 +251,6 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2024.2)
       tzinfo (>= 1.0.0)
-    uri (1.0.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     warden-jwt_auth (0.10.0)
@@ -278,7 +273,7 @@ DEPENDENCIES
   devise
   devise-jwt
   dotenv-rails
-  elasticsearch (~> 8.17)
+  elasticsearch (~> 7.10.0)
   factory_bot_rails (~> 6.0)
   faker (~> 2.0)
   faraday
