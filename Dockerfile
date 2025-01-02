@@ -5,8 +5,9 @@ RUN apt-get update -qq && apt-get install -y \
   build-essential \
   nodejs \
   yarn \
-  postgresql-client
-  supervisor
+  postgresql-client \
+  supervisor \
+  && apt-get clean
 
 # Set the working directory
 WORKDIR /app
@@ -20,11 +21,12 @@ RUN bundle install --without development test
 # Copy the project files
 COPY . .
 
-# Copy the supervisor configuration file to the container
+# Copy the Supervisor config file into the container
 COPY supervisord.conf /etc/supervisor/conf.d/
 
-# Expose port 3000
+# Expose port 3001 for Rails
 EXPOSE 3001
 
-# Start supervisor to manage both Rails server and Sidekiq
+
+# Start Supervisor to manage both Rails and Sidekiq processes
 CMD ["/usr/bin/supervisord"]
