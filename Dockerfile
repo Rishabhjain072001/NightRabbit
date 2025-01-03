@@ -29,4 +29,5 @@ EXPOSE 3001
 
 
 # Start Supervisor to manage both Rails and Sidekiq processes
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
