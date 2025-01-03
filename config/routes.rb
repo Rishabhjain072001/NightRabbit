@@ -1,5 +1,11 @@
 require 'sidekiq/web'
 
+if Rails.env.production?
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    username == ENV['SIDEKIQ_USER'] && password == ENV['SIDEKIQ_PASSWORD']
+  end
+end
+
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   devise_for :users, skip: [:registrations], controllers: { sessions: 'users/sessions' }, path_names: { sign_in: 'sign_in', sign_out: 'sign_out' }

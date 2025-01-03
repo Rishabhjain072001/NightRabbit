@@ -14,6 +14,7 @@ class Video < ApplicationRecord
       category_ids: categories.pluck(:id),
       category_names: categories.pluck(:name),
       video_id: id,
+      views: metadata&.[]('views') || 0,
     }
   end
 end
