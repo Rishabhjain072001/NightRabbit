@@ -83,8 +83,10 @@ const VideoPage = () => {
           <h1 className="video-play-title">{video?.title}</h1>
         </div>
 
-        <h2>More Videos</h2>
-        <VideoGrid videos={suggestedVideos} loading={loading} hasMore={hasMore} />
+        <div className="video-grid-container">
+          <h2>More Videos</h2>
+          <VideoGrid videos={suggestedVideos} loading={loading} hasMore={hasMore} />
+        </div>
       </div>
     </>
   );
