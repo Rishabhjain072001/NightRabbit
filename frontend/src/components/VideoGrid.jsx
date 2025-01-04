@@ -5,6 +5,7 @@ import '../styles/VideoGrid.css';
 
 const VideoGrid = ({ videos, loading, hasMore, numberOfPlaceholder=8 }) => {
   const [videoLoadingState, setVideoLoadingState] = useState([]);
+  const [hoveredVideoId, setHoveredVideoId] = useState(null);
 
   useEffect(() => {
     if (loading && hasMore) {
@@ -39,7 +40,14 @@ const VideoGrid = ({ videos, loading, hasMore, numberOfPlaceholder=8 }) => {
   return (
     <div className="video-grid">
       {videos.length > 0 &&
-        videos.map((video) => <VideoCard key={video.id} video={video} />)}
+        videos.map((video) => (
+          <VideoCard 
+            key={video.id}
+            video={video} 
+            isHovered={hoveredVideoId === video.id}
+            setHoveredVideoId={setHoveredVideoId}
+          />
+        ))}
 
       {loading && showPlaceholderForNewVideos()}
 

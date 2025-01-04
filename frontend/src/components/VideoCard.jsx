@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/VideoCard.css';
 
-const VideoCard = ({ video }) => {
-  const [isHovered, setIsHovered] = useState(false);
+const VideoCard = ({ video, isHovered, setHoveredVideoId }) => {
   const navigate = useNavigate();
 
   const handleVideoClick = (videoId) => {
     navigate(`/video/${videoId}`);
   };
 
-  // Format video duration to MM:SS or HH:MM:SS
   const formatDuration = (duration) => {
     const seconds = parseInt(duration, 10);
     const hours = Math.floor(seconds / 3600);
@@ -28,8 +26,8 @@ const VideoCard = ({ video }) => {
     <div
       className="video-card"
       onClick={() => handleVideoClick(video.id)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setHoveredVideoId(video.id)}
+      onMouseLeave={() => setHoveredVideoId(null)}
     >
       <div className="video-thumbnail-wrapper">
         {isHovered && video.metadata["trailerURL"] ? (
@@ -40,7 +38,6 @@ const VideoCard = ({ video }) => {
           <img src={video.image_url} alt={video.title} className="video-thumbnail" />
         )}
 
-        {/* Duration Box - Moved inside thumbnail wrapper */}
         {video.metadata["duration"] && (
           <div className="video-duration">
             {formatDuration(video.metadata["duration"])}
