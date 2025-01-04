@@ -9,3 +9,25 @@
   color: #888;
   text-align: center;
 }
+
+.placeholder-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  height: auto;
+}
+
+/* Placeholder thumbnail mimicking video aspect ratio */
+.video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;  /* Ensures 16:9 ratio for thumbnail */
+  border-radius: 8px;
+}
+
+/* Title Placeholder - Mimics YouTube's title lines */
+.title-placeholder {
+  height: 16px;
+  border-radius: 4px;
+}

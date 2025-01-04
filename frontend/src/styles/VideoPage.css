@@ -1,16 +1,76 @@
 .video-page {
-    padding: 35px;
-    color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center content horizontally */
+  padding: 20px 0;  /* Vertical padding */
+  color: #fff;
 }
 
 .video-player-container {
-  flex: 2;  /* Take up 2/3 of the page width */
-  max-width: 800px;  /* Limit width to 800px like YouTube */
+  width: 100%;
+  max-width: 1100px;  /* Limit width similar to YouTube */
+  padding: 0 24px;  /* Add padding on the sides */
+  box-sizing: border-box;
 }
 
 .video-play-title {
   margin-top: 15px;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 20px;  /* Adjust font size for better readability */
+  font-weight: 500;
   color: #fff;
+  padding: 10px 24px;  /* Padding around the title */
+  line-height: 1.4;  /* Line height for better spacing */
+  box-sizing: border-box;
+}
+
+.video-play-title::after {
+  content: '';
+  display: block;
+  margin-top: 12px;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);  /* Subtle line below the title */
+}
+
+/* Video Grid */
+.video-grid-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto;  /* Align grid content with video player */
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.no-videos {
+  grid-column: span 4;
+  color: #888;
+  text-align: center;
+}
+
+.placeholder-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  height: auto;
+}
+
+/* Placeholder thumbnail mimicking video aspect ratio */
+.video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;  /* Ensures 16:9 ratio for thumbnail */
+  border-radius: 8px;
+}
+
+/* Title Placeholder - Mimics YouTube's title lines */
+.title-placeholder {
+  height: 16px;
+  border-radius: 4px;
 }

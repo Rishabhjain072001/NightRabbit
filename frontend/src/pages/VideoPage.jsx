@@ -8,19 +8,19 @@ import { getSuggestions, getVideoById } from '../api/videoApi';
 import '../styles/VideoPage.css';
 
 const VideoPage = () => {
-  const { videoId } = useParams(); 
+  const { videoId } = useParams();
   const [video, setVideo] = useState(null);
-  const [suggestedVideos, setSuggestedVideos]= useState([]);
+  const [suggestedVideos, setSuggestedVideos] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [videoLoading, setVideoLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   const fetchVideoDetails = async () => {
-    setVideoLoading(true)
+    setVideoLoading(true);
     const data = await getVideoById(videoId);
     setVideo(data);
-    setVideoLoading(false)
+    setVideoLoading(false);
   };
 
   const fetchSuggestions = useCallback(async (pageToFetch) => {
@@ -42,7 +42,7 @@ const VideoPage = () => {
 
   useEffect(() => {
     fetchVideoDetails();
-    setSuggestedVideos([])
+    setSuggestedVideos([]);
     fetchSuggestions(1);
   }, [videoId]);
 
@@ -53,8 +53,10 @@ const VideoPage = () => {
   // Throttled scroll handler to detect when the user reaches the bottom
   const handleScroll = useRef(
     _.throttle(() => {
+      const scrollPosition = window.scrollY + window.innerHeight; // current scroll position
+      const middleOfPage = document.body.offsetHeight / 1.5; // middle of the page
       if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+        scrollPosition >= middleOfPage &&
         hasMore &&
         !loading
       ) {
@@ -69,24 +71,25 @@ const VideoPage = () => {
     return () => window.removeEventListener("scroll", handleScroll); // Cleanup
   }, [handleScroll]);
 
-  if (videoLoading) {
-    return <div>Video Loading...</div>;
-  }
-
   return (
-     <>
+    <>
       <div className="video-page">
         <div className="video-player-container">
-          <VideoPlayer video={video} />
+          {videoLoading ? (
+            <div>Loading video details...</div>
+          ) : (
+            <VideoPlayer video={video} />
+          )}
           <h1 className="video-play-title">{video?.title}</h1>
         </div>
 
-        <h2>More Videos</h2>
-        <VideoGrid videos={suggestedVideos} />
-        {loading && <p>Loading more...</p>}
+        <div className="video-grid-container">
+          <h2>More Videos</h2>
+          <VideoGrid videos={suggestedVideos} loading={loading} hasMore={hasMore} />
+        </div>
       </div>
     </>
   );
-}
+};
 
 export default VideoPage;

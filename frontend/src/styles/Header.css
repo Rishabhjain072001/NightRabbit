@@ -11,21 +11,22 @@ header {
 header h1 {
   font-size: 1.5rem;
   margin: 0;
+  flex-shrink: 0;
 }
 
 header h1 .header-link {
   color: white;
-  text-decoration: none; /* Removes the underline */
+  text-decoration: none;
 }
 
 .search-container {
   display: flex;
-  flex-grow: 1;
   justify-content: center;
   align-items: center;
   position: relative;
+  flex-grow: 1;
   max-width: 600px;
-  margin: 0 10px;
+  margin: 0 20px;
 }
 
 .search-container form {
@@ -47,10 +48,6 @@ header h1 .header-link {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.search-container input[type="text"]:focus {
-  border-color: #f44336;
 }
 
 .search-container button {
@@ -111,28 +108,14 @@ header h1 .header-link {
   background-color: #444;
 }
 
-.logout-button {
-  background-color: transparent;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  margin-left: 10px;
-}
-
-.logout-button:hover {
-  background-color: #f44336;
-  color: #ffffff;
-}
 
 .header-buttons {
   display: flex;
   gap: 10px;
+  flex-shrink: 0;
 }
 
-.categories-button {
+.logout-button, .categories-button {
   background-color: transparent;
   border: 1px solid #ffffff;
   color: #ffffff;
@@ -142,51 +125,97 @@ header h1 .header-link {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.categories-button:hover {
-  background-color: #f44336; /* Green color on hover */
+.logout-button:hover, .categories-button:hover {
+  background-color: #f44336;
   color: #ffffff;
 }
 
-
-/* MOBILE RESPONSIVE STYLES */
 @media screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Ensure header link is at the top left */
   header h1 {
-    font-size: 1.2rem;
+    order: 1;
+    margin-left: 20px;
+    flex-grow: 1;
+  }
+
+  /* Place buttons in the top right corner */
+  .header-buttons {
+    order: 2;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  /* Adjust search container to be below header */
+  .search-container {
+    order: 3;
+    width: 100%;
+    margin-top: 10px;
   }
 
   .search-container input[type="text"] {
-    font-size: 0.9rem; /* Adjust font size */
-    padding: 8px 12px; /* Adjust padding */
+    width: 90%;
+    font-size: 1rem;
   }
 
   .search-container button {
-    font-size: 1rem; /* Adjust font size */
-    padding: 8px 12px; /* Adjust padding */
+    padding: 10px 14px;
+    font-size: 1rem;
   }
 
-  .logout-button {
-    font-size: 0.9rem; /* Smaller font size */
-    padding: 6px 12px; /* Adjust padding */
+  /* Stack buttons vertically */
+  .logout-button, .categories-button {
+    width: 100%;
+    font-size: 1rem;
   }
 }
 
 @media screen and (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Ensure header link is at the top left */
   header h1 {
-    font-size: 1rem; /* Further reduce font size */
+    order: 1;
+    margin-left: 20px;
+    flex-grow: 1;
+  }
+
+  /* Place buttons in the top right corner */
+  .header-buttons {
+    order: 2;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  /* Adjust search container to be below header */
+  .search-container {
+    order: 3;
+    width: 100%;
+    margin-top: 10px;
   }
 
   .search-container input[type="text"] {
-    font-size: 0.8rem; /* Smaller font size */
-    padding: 6px 10px; /* Adjust padding */
+    width: 90%;
+    font-size: 1rem;
   }
 
   .search-container button {
-    font-size: 0.9rem; /* Adjust button font size */
-    padding: 6px 10px; /* Adjust padding */
+    padding: 10px 14px;
+    font-size: 1rem;
   }
 
-  .logout-button {
-    font-size: 0.8rem; /* Smaller font size */
-    padding: 5px 10px; /* Adjust padding */
+  /* Stack buttons vertically */
+  .logout-button, .categories-button {
+    width: 100%;
+    font-size: 1rem;
   }
 }
