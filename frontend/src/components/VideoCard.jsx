@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import '../styles/VideoCard.css';
 
 const VideoCard = ({ video }) => {
@@ -9,6 +8,20 @@ const VideoCard = ({ video }) => {
 
   const handleVideoClick = (videoId) => {
     navigate(`/video/${videoId}`);
+  };
+
+  // Format video duration to MM:SS or HH:MM:SS
+  const formatDuration = (duration) => {
+    const seconds = parseInt(duration, 10);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    } else {
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
   };
 
   return (
@@ -25,6 +38,14 @@ const VideoCard = ({ video }) => {
         </video>
       )}
       <img src={video.image_url} alt={video.title} className="video-thumbnail" />
+      
+      {/* Duration Box */}
+      {video.metadata["duration"] &&
+      <div className="video-duration">
+        {formatDuration(video.metadata["duration"])}
+      </div>
+      }
+
       <h4 className="video-title">{video.title}</h4>
     </div>
   );
