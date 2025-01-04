@@ -41,7 +41,7 @@ const VideoGrid = ({ videos, loading, hasMore, numberOfPlaceholder=8 }) => {
       {videos.length > 0 &&
         videos.map((video) => <VideoCard key={video.id} video={video} />)}
 
-      {showPlaceholderForNewVideos()}
+      {loading && showPlaceholderForNewVideos()}
 
       {!loading && videos.length === 0 && (
         <p className="no-videos">No results available!</p>
