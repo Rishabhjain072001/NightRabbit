@@ -68,7 +68,7 @@ const HomePage = () => {
   return (
     <>
       <div className="home-page">
-        <VideoGrid videos={videos} loading={loading} />
+        <VideoGrid videos={videos} loading={loading} hasMore={hasMore} numberOfPlaceholder={16} />
       </div>
     </>
   );
