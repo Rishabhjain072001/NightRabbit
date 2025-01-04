@@ -6,13 +6,10 @@ header {
   align-items: center;
   padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  position: fixed;  /* Make the header fixed */
-  top: 0;  /* Keep it at the top */
-  left: 0;  /* Align it to the left */
-  width: 100%;  /* Full width of the screen */
-  z-index: 1000;  /* Ensure it stays on top of other content */
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Ensure it stays above the content */
 }
-
 header h1 {
   font-size: 1.5rem;
   margin: 0;
