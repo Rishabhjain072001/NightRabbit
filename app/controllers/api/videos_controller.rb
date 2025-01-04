@@ -36,7 +36,7 @@ class Api::VideosController < ApplicationController
     suggestions = Video.search(params[:query][:localSearchquery], 
       fields: ["title^10", "category_names^5"], 
       match: :word_start, 
-      limit: 10, 
+      limit: 8, 
       misspellings: { below: 5 }
     )
 
