@@ -31,20 +31,22 @@ const VideoCard = ({ video }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isHovered && video.metadata["trailerURL"] && (
-        <video className="video-trailer" autoPlay muted loop>
-          <source src={video.metadata["trailerURL"]} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      )}
-      <img src={video.image_url} alt={video.title} className="video-thumbnail" />
-      
-      {/* Duration Box */}
-      {video.metadata["duration"] &&
-      <div className="video-duration">
-        {formatDuration(video.metadata["duration"])}
+      <div className="video-thumbnail-wrapper">
+        {isHovered && video.metadata["trailerURL"] ? (
+          <video className="video-trailer" autoPlay muted loop>
+            <source src={video.metadata["trailerURL"]} type="video/mp4" />
+          </video>
+        ) : (
+          <img src={video.image_url} alt={video.title} className="video-thumbnail" />
+        )}
+
+        {/* Duration Box - Moved inside thumbnail wrapper */}
+        {video.metadata["duration"] && (
+          <div className="video-duration">
+            {formatDuration(video.metadata["duration"])}
+          </div>
+        )}
       </div>
-      }
 
       <h4 className="video-title">{video.title}</h4>
     </div>

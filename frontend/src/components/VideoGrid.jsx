@@ -26,10 +26,10 @@ const VideoGrid = ({ videos, loading, hasMore, numberOfPlaceholder=8 }) => {
   const showPlaceholderForNewVideos = () => {
     return videoLoadingState.map((isLoading, index) =>
       isLoading ? (
-        <div key={`placeholder-${index}`} className="video-card">
+        <div key={`placeholder-${index}`} className="placeholder-card">
           <Placeholder animation="glow">
-            <Placeholder xs={12} style={{height: "150px"}} />
-            <Placeholder xs={12} />
+            <Placeholder className="video-placeholder" />
+            <Placeholder xs={8} className="title-placeholder mt-2" />
           </Placeholder>
         </div>
       ) : null
