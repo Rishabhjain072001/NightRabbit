@@ -6,6 +6,7 @@ import _ from "lodash";
 import { getSuggestions, getVideoById } from '../api/videoApi';
 
 import '../styles/VideoPage.css';
+import { Placeholder } from 'react-bootstrap';
 
 const VideoPage = () => {
   const { videoId } = useParams();
@@ -75,12 +76,14 @@ const VideoPage = () => {
     <>
       <div className="video-page">
         <div className="video-player-container">
-          {videoLoading ? (
-            <div>Loading video details...</div>
-          ) : (
-            <VideoPlayer video={video} />
-          )}
-          <h1 className="video-play-title">{video?.title}</h1>
+          <VideoPlayer video={video} videoLoading={videoLoading}/>
+          {video ? 
+            <h1 className="video-play-title">{video?.title}</h1>
+            :
+            <Placeholder animation="glow">
+              <Placeholder xs={8} className="video-play-title-placeholder" />
+            </Placeholder>
+          }
         </div>
 
         <div className="video-grid-container">
