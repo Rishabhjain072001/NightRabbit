@@ -101,7 +101,7 @@ const Header = ({ query, setQuery }) => {
           />
           <button type="submit"><FaSearch /></button>
         </form>
-        {localSearchquery && isInputFocused && (
+        {localSearchquery && isInputFocused && suggestions.length > 0 && (
           <div className="suggestions-list">
             {loading ? (
               <div className='suggestion-item'>

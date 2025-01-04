@@ -36,24 +36,27 @@ header h1 .header-link {
 }
 
 .search-container input[type="text"] {
-  padding: 10px 16px;
-  border: 1px solid #444;
+  padding: 12px 20px;  /* Increase padding for a taller input */
+  border: 1px solid #3a3a3a;
   border-radius: 24px 0 0 24px;
-  background-color: #333;
-  color: #ffffff;
+  background-color: #121212;
+  color: #fff;
   width: 100%;
+  font-size: 1.1rem;
   outline: none;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  height: 50px; /* Set the height to match YouTube's search bar */
+}
+.search-container input[type="text"]:focus {
+  border-color: #f44336;  /* Focused input border color */
+  box-shadow: 0 2px 5px rgba(244, 67, 54, 0.6);  /* Focused shadow effect */
 }
 
 .search-container button {
-  padding: 10px 16px;
+  padding: 12px 16px; /* Adjust padding for better vertical alignment */
   border: none;
-  background-color: #f44336;
+  background-color: #333;
   color: #ffffff;
   border-radius: 0 24px 24px 0;
   cursor: pointer;
@@ -62,11 +65,12 @@ header h1 .header-link {
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s;
+  height: 50px; /* Make the button height the same as the input */
 }
 
-.search-container button:hover {
+/* .search-container button:hover {
   background-color: #d32f2f;
-}
+} */
 
 .suggestions-list {
   position: absolute;
@@ -74,22 +78,24 @@ header h1 .header-link {
   left: 0;
   right: 0;
   background-color: #333;
-  max-height: 200px;
   overflow-y: auto;
-  border-radius: 0 0 24px 24px;
+  border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 10;
-  width: 100%;
+  width: calc(100% - 45px);
+  padding: 5px 0;
 }
 
 .suggestion-item {
-  padding: 10px 15px;
+  padding: 12px 15px;
   cursor: pointer;
   color: #ffffff;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   overflow: hidden;
+  transition: background-color 0.2s;
 }
 
 .suggestion-item span {
@@ -102,12 +108,17 @@ header h1 .header-link {
 
 .suggestion-item span:first-child {
   font-weight: bold;
+  font-size: 1rem;
+}
+
+.suggestion-item span:last-child {
+  font-size: 0.9rem;
+  color: #ccc;
 }
 
 .suggestion-item:hover {
   background-color: #444;
 }
-
 
 .header-buttons {
   display: flex;
@@ -136,14 +147,12 @@ header h1 .header-link {
     align-items: center;
   }
 
-  /* Ensure header link is at the top left */
   header h1 {
     order: 1;
     margin-left: 20px;
     flex-grow: 1;
   }
 
-  /* Place buttons in the top right corner */
   .header-buttons {
     order: 2;
     display: flex;
@@ -151,7 +160,6 @@ header h1 .header-link {
     margin-top: 10px;
   }
 
-  /* Adjust search container to be below header */
   .search-container {
     order: 3;
     width: 100%;
@@ -168,7 +176,6 @@ header h1 .header-link {
     font-size: 1rem;
   }
 
-  /* Stack buttons vertically */
   .logout-button, .categories-button {
     width: 100%;
     font-size: 1rem;
@@ -181,14 +188,12 @@ header h1 .header-link {
     align-items: center;
   }
 
-  /* Ensure header link is at the top left */
   header h1 {
     order: 1;
     margin-left: 20px;
     flex-grow: 1;
   }
 
-  /* Place buttons in the top right corner */
   .header-buttons {
     order: 2;
     display: flex;
@@ -196,7 +201,6 @@ header h1 .header-link {
     margin-top: 10px;
   }
 
-  /* Adjust search container to be below header */
   .search-container {
     order: 3;
     width: 100%;
@@ -213,7 +217,6 @@ header h1 .header-link {
     font-size: 1rem;
   }
 
-  /* Stack buttons vertically */
   .logout-button, .categories-button {
     width: 100%;
     font-size: 1rem;
