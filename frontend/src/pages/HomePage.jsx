@@ -47,8 +47,10 @@ const HomePage = () => {
   // Throttled scroll handler to detect when the user reaches the bottom
   const handleScroll = useRef(
     _.throttle(() => {
+      const scrollPosition = window.scrollY + window.innerHeight; // current scroll position
+      const middleOfPage = document.body.offsetHeight / 1.5; // middle of the page
       if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+        scrollPosition >= middleOfPage &&
         hasMore &&
         !loading
       ) {
