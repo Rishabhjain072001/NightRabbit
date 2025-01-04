@@ -3,21 +3,25 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Login.css';
 
-
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);  // New loading state
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);  // Start spinner
+    setError(null);
     try {
       await login({ email, password });
-      navigate('/'); 
+      navigate('/');
     } catch (err) {
       setError(err?.response?.data?.error || "Something went wrong!");
+    } finally {
+      setLoading(false);  // Stop spinner
     }
   };
 
@@ -41,8 +45,8 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit" className="login-button">
-          Login
+        <button type="submit" className="login-button" disabled={loading}>
+          {loading ? <span className="spinner"></span> : 'Login'}
         </button>
       </form>
     </div>

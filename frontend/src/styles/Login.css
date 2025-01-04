@@ -2,17 +2,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #121212;
+  height: 100vh;  /* Full height for desktop */
+  background: url('../../public/images/login-background.jpg') no-repeat center center/cover;
   padding: 20px;
   box-sizing: border-box;
+  position: relative;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);  /* Darker overlay for better visibility */
+  z-index: -1;
 }
 
 .login-form {
-  background-color: #1e1e1e;
+  background-color: rgba(30, 30, 30, 0.95);  /* Slight transparency */
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
@@ -76,15 +88,46 @@ input:focus {
   padding: 10px;
   border-radius: 4px;
   text-align: center;
-  margin: 0 auto 20px;  /* Centers and adds space below */
+  margin: 0 auto 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
+  .login-container {
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start;  /* Shifts form up */
+    padding-top: 50px;  /* Adds space at the top */
+  }
+
   .login-form {
     padding: 20px;
+    margin-top: 20vh;  /* Adjusts height to avoid keyboard overlap */
   }
 
   .login-title {

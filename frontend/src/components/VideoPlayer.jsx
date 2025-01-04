@@ -24,7 +24,7 @@ const useScript = (url) => {
 }
 
 const VideoPlayer = ({ video, playerId = "player" }) => {
-  const isPlayerJsLoaded = useScript("/playerjs.js");
+  const isPlayerJsLoaded = useScript("/js/playerjs.js");
 
   useEffect(() => {
     const initializePlayer = () => {
