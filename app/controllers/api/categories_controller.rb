@@ -14,6 +14,7 @@ class Api::CategoriesController < ApplicationController
   def videos
     category = Category.find(params[:id])
     videos = category.videos.page(params[:page]).per(20)
-    render json: videos, each_serializer: VideoSerializer
+    render json: videos, each_serializer: VideoSerializer, category_name: category.name
   end
-end  
+end 
+

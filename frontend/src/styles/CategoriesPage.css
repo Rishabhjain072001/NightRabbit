@@ -48,6 +48,8 @@
     overflow: hidden; /* Prevent content from overflowing */
     text-overflow: ellipsis; /* Add ellipsis for overflowed text */
     white-space: nowrap; /* Prevent text from wrapping to the next line */
+    max-width: 420px;  /* Maximum width for each video card */
+    width: 100%;
   }
 
   .category-card span {
