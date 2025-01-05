@@ -6,7 +6,12 @@ const ProtectedRoute = () => {
   const { token, user, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="full-screen-loading">
+        <div className="loading-text">Loading...</div>
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
   if (!token || !user) {
