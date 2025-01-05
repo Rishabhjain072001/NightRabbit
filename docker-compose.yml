@@ -14,7 +14,7 @@ services:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - VIDEO_SCRAPING_ENDPOINT=${VIDEO_SCRAPING_ENDPOINT}
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-      - REDIS_URL=redis://redis:6379/0
+      - REDIS_URL=${REDIS_URL}
     depends_on:
       - frontend
       - elasticsearch
