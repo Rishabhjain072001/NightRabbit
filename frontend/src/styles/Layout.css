@@ -6,3 +6,49 @@ body, html {
     color: #ffffff;
     font-family: Arial, sans-serif;
   }
+
+  .full-screen-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);  /* Dark overlay */
+    display: flex;
+    flex-direction: column;  /* Stacks text and spinner vertically */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: #fff;  /* Light text for contrast */
+  }
+  
+  .loading-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;  /* Space between text and spinner */
+    text-transform: uppercase;
+    color: #f0f0f0;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .spinner {
+    border: 8px solid #2d2d2d;  /* Dark gray border */
+    border-top: 8px solid #3498db; /* Blue top spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Fade-in animation for text */
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  /* Spinner rotation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
