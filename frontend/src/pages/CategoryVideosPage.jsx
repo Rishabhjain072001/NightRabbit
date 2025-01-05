@@ -5,6 +5,7 @@ import { getVideosByCategory } from '../api/categoryApi';
 import _ from "lodash";
 
 import '../styles/CategoryVideosPage.css';
+import { Placeholder } from 'react-bootstrap';
 
 const CategoryVideosPage = () => {
   const { categoryId } = useParams();
@@ -68,6 +69,13 @@ const CategoryVideosPage = () => {
   return (
     <>
       <div className="category-page">
+        {videos.length > 0 ? 
+            <h1 className="category-heading">{videos[0].category_name} Videos</h1>
+            :
+            <Placeholder animation="glow">
+              <Placeholder xs={12} className="video-play-title-placeholder" />
+            </Placeholder>
+         }
         <VideoGrid videos={videos} loading={loading} />
       </div>
     </>

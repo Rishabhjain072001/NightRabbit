@@ -3,3 +3,12 @@
 .category-page {
     padding: 35px;
   }
+
+  .category-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #f1f1f1; /* Light color for heading text */
+    text-align: left;
+    text-transform: capitalize;
+}
