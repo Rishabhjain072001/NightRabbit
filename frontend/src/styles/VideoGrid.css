@@ -1,8 +1,39 @@
 .video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.video-grid:has(.video-card:nth-child(3):nth-last-child(1)) {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
+}
+
+.video-grid:has(.video-card:nth-child(2):nth-last-child(1)) {
+  grid-template-columns: repeat(2, minmax(320px, 420px));
+}
+
+.video-grid:has(.video-card:nth-child(1):nth-last-child(1)) {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
   }
+
+  .video-grid:has(.video-card:nth-child(2):nth-last-child(1)),
+  .video-grid:has(.video-card:nth-child(3):nth-last-child(1)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
 
 .no-videos {
   grid-column: span 4;
