@@ -7,6 +7,7 @@ RUN apt-get update -qq && apt-get install -y \
   yarn \
   postgresql-client \
   supervisor \
+  redis-tools \
   && apt-get clean
 
 # Set the working directory
