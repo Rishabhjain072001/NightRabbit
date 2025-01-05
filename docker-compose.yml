@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   backend:
     build:
@@ -19,6 +20,7 @@ services:
       - frontend
       - elasticsearch
       - redis
+      - sidekiq
 
   frontend:
     build:
@@ -32,16 +34,18 @@ services:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0 # Use the official Elasticsearch Docker image
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     environment:
-      - discovery.type=single-node # Set the discovery type to single-node for local use
+      - discovery.type=single-node
     ports:
-      - "9200:9200" # Expose Elasticsearch on port 9200
+      - "9200:9200"
     networks:
       - app-network
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
 
   redis:
-    image: redis:latest # Use official Redis Docker image
+    image: redis:latest
     ports:
       - "6380:6379"
     networks:
@@ -55,6 +59,26 @@ services:
       start_period: 30s
       timeout: 5s
 
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - RAILS_ENV=${RAILS_ENV}
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  redis_data:
+  elastic_data:
