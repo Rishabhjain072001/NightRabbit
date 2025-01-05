@@ -28,7 +28,5 @@ COPY supervisord.conf /etc/supervisor/conf.d/
 # Expose port 3001 for Rails
 EXPOSE 3001
 
-
-# Start Supervisor to manage both Rails and Sidekiq processes
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
+# Gracefully handle Sidekiq shutdown during container stop
+CMD ["bash", "-c", "trap 'bundle exec sidekiqctl stop /app/tmp/sidekiq.pid' SIGTERM; /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf"]
