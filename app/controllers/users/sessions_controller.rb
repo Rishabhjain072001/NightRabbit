@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  protect_from_forgery with: :null_session, if: -> { request.format.json? }
+
   respond_to :json
   skip_before_action :authenticate_user!, only: [:create]
   skip_before_action :verify_signed_out_user, only: [:destroy]
