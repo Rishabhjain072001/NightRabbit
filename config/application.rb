@@ -37,5 +37,8 @@ module NightRabbit
     # Skip views, helpers and assets when generating a new resource.
     config.active_job.queue_adapter = :sidekiq
     config.api_only = false
+
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_night_rabbit_session'
   end
 end

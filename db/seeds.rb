@@ -10,4 +10,5 @@ User.find_or_create_by(email: "user@nightrabbit.com") do |user|
   user.password = "Password@1234"
   user.expires_at = Time.now + 30.days
 end
-  
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

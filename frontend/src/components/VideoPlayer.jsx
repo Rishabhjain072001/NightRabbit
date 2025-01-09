@@ -24,7 +24,8 @@ const useScript = (url) => {
 }
 
 const VideoPlayer = ({ video, playerId = "player" }) => {
-  const isPlayerJsLoaded = useScript("/js/playerjs.js");
+  const scriptUrl = window.innerWidth <= 768 ? "/js/mobilePlayerjs.js" : "/js/playerjs.js";
+  const isPlayerJsLoaded = useScript(scriptUrl);
 
   useEffect(() => {
     const initializePlayer = () => {
