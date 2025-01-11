@@ -19,8 +19,6 @@ services:
       - REDIS_URL=${REDIS_URL}
     depends_on:
       - frontend
-      - elasticsearch
-      - redis
       - sidekiq
 
   frontend:
@@ -39,8 +37,6 @@ services:
       context: .
       dockerfile: Dockerfile
     command: bundle exec sidekiq
-    depends_on:
-      - redis
     volumes:
       - .:/app
     environment:
