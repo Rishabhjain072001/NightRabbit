@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
       
       if @current_user.nil?
         render_unauthorized('Invalid token')
+      elsif @current_user.last_ip && @current_user.last_ip != request.remote_ip
+        render_unauthorized('Logged in on another device.')
       elsif @current_user.expired?
         render_unauthorized('Your login credentials have expired. Please contact admin for new credentials.')
       end

@@ -32,11 +32,22 @@ export const AuthProvider = ({ children }) => {
     validateToken();
   }, [token]);
 
-  const login = async ({ email, password }) => {
-    const response = await apiClient.post('/users/sign_in', { email, password });
-    localStorage.setItem('token', response.data.token);
-    setToken(response.data.token);
-    setUser(response.data.user);
+  const login = async ({ email, password, confirm }, callback) => {
+    try {
+      const response = await apiClient.post('/users/sign_in', { email, password, confirm });
+      
+      // If IP mismatch, response will include 'action: "confirm_ip_change"'
+      if (response.data.action === 'confirm_ip_change') {
+        callback(false); // Show confirmation dialog
+      } else {
+        localStorage.setItem('token', response.data.token);
+        setToken(response.data.token);
+        setUser(response.data.user);
+        callback(true); // Proceed with login
+      }
+    } catch (err) {
+      throw err;  // Error handling
+    }
   };
 
   const logout = async () => {

@@ -73,6 +73,11 @@ input:focus {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Set a fixed height */
+  box-sizing: border-box; /* Ensure padding doesn't affect height */
 }
 
 .login-button:hover {
@@ -93,7 +98,7 @@ input:focus {
   box-sizing: border-box;
 }
 
-.spinner {
+.button-spinner {
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-top: 3px solid #ffffff;
   border-radius: 50%;
@@ -114,6 +119,86 @@ input:focus {
 button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+.confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background-color: rgba(30, 30, 30, 0.95); /* Matches form background */
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  box-sizing: border-box;
+}
+
+.confirmation-popup p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #b3b3b3;
+}
+
+.confirmation-popup button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  margin: 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  border: 1px solid #ffffff;
+}
+
+.confirmation-popup button:hover {
+  background-color: #f44336; /* Matches button hover */
+  color: #ffffff;
+}
+
+.confirmation-popup button:nth-child(1) {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.confirmation-popup button:nth-child(1):hover {
+  background-color: #6200ea; /* Subtle highlight for primary action */
+}
+
+.confirmation-popup button:nth-child(2) {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.confirmation-popup button:nth-child(2):hover {
+  background-color: #333333; /* Subtle highlight for cancel */
+}
+
+/* Backdrop */
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Mobile Responsiveness */
