@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Login.css';
@@ -97,9 +97,9 @@ const LoginPage = () => {
         </button>
 
         <div className="additional-links">
-          <a href="https://get-login-creds.example.com" target="_blank" rel="noopener noreferrer">
+          <Link to="/credentials" target="_blank" rel="noopener noreferrer">
             Get Login Credentials
-          </a>
+          </Link>
           <a href="https://t.me/yourtelegramchannel" target="_blank" rel="noopener noreferrer">
             Join our Telegram Channel
           </a>
