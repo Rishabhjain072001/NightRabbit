@@ -2,11 +2,49 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;  /* Full height for desktop */
+  height: 100vh;
   background: url('../../public/images/login-background.jpg') no-repeat center center/cover;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
+}
+
+.login-logo {
+  display: block;
+  margin: 0 auto 20px;
+  width: 120px;
+  height: auto;
+}
+
+.password-group {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 70%; /* Center vertically */
+  right: 10px; /* Align to the right */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+}
+
+.additional-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.additional-links a {
+  color: #b3b3b3;
+  text-decoration: none;
+  margin: 5px 0; /* Add vertical spacing */
+  display: block; /* Place links in separate lines */
+  transition: color 0.3s;
+}
+
+.additional-links a:hover {
+  color: #ffffff;
 }
 
 .login-container::before {
@@ -61,6 +99,15 @@ input {
 input:focus {
   outline: none;
   border-color: #6200ea;
+}
+
+/* Autofill styling */
+input:-webkit-autofill {
+  background-color: rgba(0, 0, 0, 0.8) !important; /* Match the login form background */
+  color: #fff !important; /* Ensure text remains visible */
+  transition: background-color 5000s ease-in-out 0s; /* Prevent default browser changes */
+  -webkit-text-fill-color: #fff !important; /* Ensure text is white */
+  border: 1px solid #555; /* Optional: Keep consistent border */
 }
 
 .login-button {

@@ -1,20 +1,21 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Night Rabbit",
+  "name": "Night Rabbit - Exclusive 18+ Videos Ad-Free",
+  "description": "Night Rabbit offers 90+ lakh premium 18+ sex videos across 40,000+ categories. Enjoy ad-free videos with a simple monthly subscription for exclusive access.",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "rabbit-logo.jpeg",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/jpeg"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
+      "src": "rabbit-logo.jpeg",
+      "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
+      "src": "rabbit-logo.jpeg",
+      "type": "image/jpeg",
       "sizes": "512x512"
     }
   ],
