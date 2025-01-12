@@ -83,7 +83,12 @@ const Header = ({ query, setQuery }) => {
 
   return (
     <header>
-      <h1><Link to="/" className="header-link">NightRabbit</Link></h1>
+      <h1>
+        <Link to="/" className="header-link">
+          <img src="/rabbit-logo-light.jpeg" alt="Rabbit Logo" className="logo-image" />
+          <img src="/text-image.jpeg" alt="Night Rabbit" className="text-image" />
+        </Link>
+      </h1>
       <div
         className="search-container"
         ref={searchContainerRef}
