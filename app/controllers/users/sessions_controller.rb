@@ -12,8 +12,17 @@ class Users::SessionsController < Devise::SessionsController
 
     if user && user.valid_password?(params[:password])
       if user.expires_at && user.expires_at > Time.now
-        token = JwtService.encode({ user_id: user.id, jti: user.jti })  # Generate JWT token
-        render json: {  token: token, user: user }, status: :ok
+        if params[:confirm] || (user.last_ip.nil? || user.last_ip == request.remote_ip)
+          token = JwtService.encode({ user_id: user.id, jti: user.jti })
+          user.update(last_ip: request.remote_ip)
+          #TODO: User serlizer here
+          render json: {  token: token, user: user }, status: :ok
+        else
+          render json: {
+            message: "You are already logged in from another device (IP: #{user.last_ip}). If you continue, you will be logged out from the previous device.",
+            action: 'confirm_ip_change'
+          }, status: :ok
+        end
       else
         render json: { error: "Account has expired. Please contact admin!" }, status: :unauthorized
       end
@@ -26,6 +35,7 @@ class Users::SessionsController < Devise::SessionsController
     user = current_user
     if user
       User.revoke_jwt(user)
+      user.update(last_ip: nil)
       sign_out(user)
     end
 

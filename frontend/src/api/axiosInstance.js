@@ -29,7 +29,17 @@ axiosInstance.interceptors.request.use(
 // Response interceptor for handling errors globally
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error)
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear the token from localStorage
+      localStorage.removeItem('token');
+
+      // Redirect to login page
+      window.location.href = '/login'; // Use React Router's navigate if using in a React component
+    }
+
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;
