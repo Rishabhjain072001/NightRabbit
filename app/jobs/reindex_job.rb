@@ -5,7 +5,7 @@ class ReindexJob < ApplicationJob
     model = model_name.constantize
     index = 0
 
-    model.where("id >= ?", start_id).find_in_batches(batch_size: 5000) do |batch|
+    model.find_in_batches(batch_size: 5000, start: start_id) do |batch|
       index += 1
       Rails.logger.info "Reindexing batch #{index}, batch size: #{batch.count}"
 
