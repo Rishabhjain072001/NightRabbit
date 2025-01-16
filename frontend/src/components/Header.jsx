@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { FaSearch } from 'react-icons/fa'; // Import the search icon
+import { FaSearch } from 'react-icons/fa'; 
 
 import '../styles/Header.css';
 import { getSearchSuggestions } from '../api/searchSuggestionApi';
@@ -13,8 +13,9 @@ const Header = ({ query, setQuery }) => {
   const [localSearchquery, setLocalSearchquery] = useState(query); 
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const searchContainerRef = useRef(null);  // Ref to track the search container
-  const [isInputFocused, setIsInputFocused] = useState(false); // Track if the input is focused
+  const searchContainerRef = useRef(null);  
+  const [isInputFocused, setIsInputFocused] = useState(false); 
+  const [highlightedIndex, setHighlightedIndex] = useState(0); // Track the highlighted index
 
   const handleLogout = () => {
     logout();
@@ -46,6 +47,7 @@ const Header = ({ query, setQuery }) => {
         const response = await getSearchSuggestions({ localSearchquery });
         setSuggestions(response); 
         setLoading(false);
+        setHighlightedIndex(0); // Reset highlighted index on suggestion update
       } catch {
         setLoading(false);
       }
@@ -53,9 +55,9 @@ const Header = ({ query, setQuery }) => {
       setSuggestions([]);
     }
   }, [localSearchquery]);
-  
+
   useEffect(() => {
-    if(query !== localSearchquery){
+    if (query !== localSearchquery) {
       fetchSuggestions();
     }
   }, [localSearchquery]);
@@ -71,7 +73,7 @@ const Header = ({ query, setQuery }) => {
   const handleBlur = (e) => {
     setTimeout(() => {
       if (!searchContainerRef.current.contains(document.activeElement)) {
-        setSuggestions([]); // Clear suggestions if focus is outside
+        setSuggestions([]); 
       }
     }, 100);
   };
@@ -79,6 +81,24 @@ const Header = ({ query, setQuery }) => {
   // Handle focus event to set the input as focused
   const handleFocus = () => {
     setIsInputFocused(true);
+  };
+
+  const handleKeyDown = (e) => {
+    if (suggestions.length > 0) {
+      switch (e.key) {
+        case 'ArrowDown':
+          setHighlightedIndex((prevIndex) => Math.min(prevIndex + 1, suggestions.length - 1));
+          break;
+        case 'ArrowUp':
+          setHighlightedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+          break;
+        case 'Enter':
+          handleSuggestionClick(suggestions[highlightedIndex]);
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   return (
@@ -92,8 +112,8 @@ const Header = ({ query, setQuery }) => {
       <div
         className="search-container"
         ref={searchContainerRef}
-        onBlur={handleBlur} // Add the blur handler here
-        onFocus={handleFocus} // Set focus state when the input is focused
+        onBlur={handleBlur} 
+        onFocus={handleFocus} 
       >
         <form onSubmit={handleSearch}>
           <input
@@ -101,8 +121,9 @@ const Header = ({ query, setQuery }) => {
             value={localSearchquery}
             onChange={(e) => setLocalSearchquery(e.target.value)}
             placeholder="Search videos..."
-            onBlur={handleBlur} // Handle the blur event
-            onFocus={handleFocus} // Handle the focus event
+            onBlur={handleBlur} 
+            onFocus={handleFocus}
+            onKeyDown={handleKeyDown} // Handle keyboard navigation
           />
           <button type="submit"><FaSearch /></button>
         </form>
@@ -113,12 +134,12 @@ const Header = ({ query, setQuery }) => {
                 <span>Loading...</span>
               </div>
             ) : (
-              suggestions.map((suggestion) => (
+              suggestions.map((suggestion, index) => (
                 <div
                   key={suggestion.id}
-                  className="suggestion-item"
+                  className={`suggestion-item ${index === highlightedIndex ? 'highlighted' : ''}`} // Apply highlighted class
                   onClick={() => handleSuggestionClick(suggestion)}
-                  onMouseDown={(e) => e.preventDefault()} // Prevent blur when clicking suggestion
+                  onMouseDown={(e) => e.preventDefault()} 
                 >
                   <span>{suggestion.title}</span>
                   <span>{suggestion.category_name}</span>

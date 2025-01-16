@@ -139,6 +139,11 @@ header h1 .text-image {
   background-color: #444;
 }
 
+.suggestion-item.highlighted {
+  background-color: #444; /* Highlighted suggestion background */
+  color: #fff; /* Ensure the text color remains white */
+}
+
 .header-buttons {
   display: flex;
   gap: 10px;
