@@ -15,8 +15,7 @@ class Users::SessionsController < Devise::SessionsController
         if params[:confirm] || (user.last_ip.nil? || user.last_ip == request.remote_ip)
           token = JwtService.encode({ user_id: user.id, jti: user.jti })
           user.update(last_ip: request.remote_ip)
-          #TODO: User serlizer here
-          render json: {  token: token, user: user }, status: :ok
+          render json: { token: token, user: UserSerializer.new(user).serializable_hash }, status: :ok
         else
           render json: {
             message: "You are already logged in from another device (IP: #{user.last_ip}). If you continue, you will be logged out from the previous device.",
