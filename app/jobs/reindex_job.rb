@@ -8,11 +8,9 @@ class ReindexJob < ApplicationJob
     model.find_in_batches(batch_size: 5000, start: start_id) do |batch|
       index += 1
       Rails.logger.info "Reindexing batch #{index}, batch size: #{batch.count}"
-
-      batch.each do |record|
-        Rails.logger.info "Reindexing #{model_name.downcase} id #{record.id}"
-        record.reindex
-      end
+      
+      # Bulk import records into Elasticsearch
+      model.searchkick_index.import(batch)
     end
   end
 end
